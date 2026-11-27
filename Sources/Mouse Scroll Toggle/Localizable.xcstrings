@@ -1,0 +1,507 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "“Menu Bar Only” is unavailable on this Mac because the built-in display has a notch, where the menu bar icon could become hidden." : {
+      "comment" : "Settings > General: note shown when the Menu Bar Only option is disabled on a Mac with a notch",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このMacは内蔵ディスプレイにノッチがあり、メニューバーアイコンがノッチの陰に隠れることがあるため、「メニューバーのみ」は使用できません。"
+          }
+        }
+      }
+    },
+    "⚠️ Permission to control your Mac required" : {
+      "comment" : "Accessibility warning",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Macを制御する許可が必要"
+          }
+        }
+      }
+    },
+    "Permission to control your Mac required" : {
+      "comment" : "State label\nTooltip",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Macを制御する許可が必要"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "comment" : "Open panel button: add the chosen apps to the registered list",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加"
+          }
+        }
+      }
+    },
+    "All Apps" : {
+      "comment" : "Settings > Registration: stop scrolling in all apps",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "comment" : "Help window toolbar: go back (accessibility name)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
+          }
+        }
+      }
+    },
+    "Both" : {
+      "comment" : "Settings: stop scrolling in both vertical and horizontal directions",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "両方"
+          }
+        }
+      }
+    },
+    "Choose from Applications Folder..." : {
+      "comment" : "Settings > Registration: + menu item that opens the app chooser",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリケーションフォルダから選択..."
+          }
+        }
+      }
+    },
+    "Continue Anyway" : {
+      "comment" : "Translocation alert button",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このまま続ける"
+          }
+        }
+      }
+    },
+    "Directions to Stop" : {
+      "comment" : "Settings: picker title for which scroll directions to stop",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止する方向"
+          }
+        }
+      }
+    },
+    "Display Mode" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示モード"
+          }
+        }
+      }
+    },
+    "Display mode has been reset to \"Menu Bar and Dock\"." : {
+      "comment" : "Reset alert body",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示モードを「メニューバーとDockの両方」にリセットしました。"
+          }
+        }
+      }
+    },
+    "Display settings reset" : {
+      "comment" : "Reset alert title",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示設定を初期状態に戻しました"
+          }
+        }
+      }
+    },
+    "Dock Only" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dockのみ"
+          }
+        }
+      }
+    },
+    "For security, macOS runs apps obtained from the internet from a copy in a temporary location until you move them in the Finder." : {
+      "comment" : "Translocation alert: 2nd paragraph",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOSは安全のため、インターネットから入手したアプリをFinderで移動するまでは、元の場所ではなく一時的な場所に置いたコピーから起動します。"
+          }
+        }
+      }
+    },
+    "Forward" : {
+      "comment" : "Help window toolbar: go forward (accessibility name)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進む"
+          }
+        }
+      }
+    },
+    "General" : {
+      "comment" : "Settings tab title",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
+          }
+        }
+      }
+    },
+    "Help" : {
+      "comment" : "Help menu item (common menu)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプ"
+          }
+        }
+      }
+    },
+    "Hold ⌘ while launching to reset display mode to initial state (Menu Bar and Dock)." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⌘キーを押しながら起動すると初期状態（メニューバーとDockの両方）に戻ります。"
+          }
+        }
+      }
+    },
+    "Horizontal Only" : {
+      "comment" : "Settings: stop horizontal scrolling only",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "水平方向のみ"
+          }
+        }
+      }
+    },
+    "Launch at Login" : {
+      "comment" : "Settings: launch at login toggle",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログイン時に起動"
+          }
+        }
+      }
+    },
+    "Menu Bar and Dock" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバーとDockの両方"
+          }
+        }
+      }
+    },
+    "Menu Bar Only" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバーのみ"
+          }
+        }
+      }
+    },
+    "Mouse Scroll OFF (%@)" : {
+      "comment" : "State label auto off",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マウススクロール OFF（%@）"
+          }
+        }
+      }
+    },
+    "Mouse Scroll OFF (All Apps)" : {
+      "comment" : "State label: stopped in all apps",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マウススクロール OFF（すべて）"
+          }
+        }
+      }
+    },
+    "Mouse Scroll ON" : {
+      "comment" : "State label on",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マウススクロール ON"
+          }
+        }
+      }
+    },
+    "Mouse Scroll Toggle Help" : {
+      "comment" : "Help menu item and help window title",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mouse Scroll Toggle ヘルプ"
+          }
+        }
+      }
+    },
+    "Mouse Scroll Toggle is in the Applications folder, but it was moved there in a way that doesn't meet Apple's requirements. Quit Mouse Scroll Toggle, move it to the Desktop in the Finder, move it back to the Applications folder, and then open it again. Also, make sure to move it by itself, not together with other apps." : {
+      "comment" : "Translocation alert: 3rd paragraph (original location is inside the Applications folder)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mouse Scroll Toggleはアプリケーションフォルダにありますが、Appleの条件を満たさない方法で移動されています。Mouse Scroll Toggleを終了し、Finderでいったんデスクトップへ移動してからアプリケーションフォルダへ戻し、もう一度開いてください。さらに、ほかのアプリと一緒ではなく、1つずつ移動することにも注意してください。"
+          }
+        }
+      }
+    },
+    "Mouse Scroll Toggle is running from a temporary location because it was opened right after being downloaded." : {
+      "comment" : "Translocation alert: 1st paragraph",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダウンロードした直後のため、Mouse Scroll Toggleは一時的な場所から起動しています。"
+          }
+        }
+      }
+    },
+    "Move Mouse Scroll Toggle again in the Finder" : {
+      "comment" : "Translocation alert title (app is already in the Applications folder)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mouse Scroll ToggleをFinderで移動し直してください"
+          }
+        }
+      }
+    },
+    "Move Mouse Scroll Toggle to the Applications folder" : {
+      "comment" : "Translocation alert title",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mouse Scroll Toggleをアプリケーションフォルダへ移動してください"
+          }
+        }
+      }
+    },
+    "No Running Apps to Add" : {
+      "comment" : "Settings > Registration: disabled + menu item when every running app is already registered",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加できる起動中のアプリはありません"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "comment" : "OK button",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "comment" : "Quit menu item",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "終了"
+          }
+        }
+      }
+    },
+    "Quit Mouse Scroll Toggle, move it to the Applications folder in the Finder, and then open it again. Also, make sure to move it by itself, not together with other apps." : {
+      "comment" : "Translocation alert: 3rd paragraph (original location is outside the Applications folder)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mouse Scroll Toggleを終了し、Finderでアプリケーションフォルダへ移動してから、もう一度開いてください。さらに、ほかのアプリと一緒ではなく、1つずつ移動することにも注意してください。"
+          }
+        }
+      }
+    },
+    "Quit Mouse Scroll Toggle, move it to the Applications folder in the Finder, and then open it again. If it's already in the Applications folder, move it to the Desktop and back again in the Finder. Also, make sure to move it by itself, not together with other apps." : {
+      "comment" : "Translocation alert: 3rd paragraph (original location unknown)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mouse Scroll Toggleを終了し、Finderでアプリケーションフォルダへ移動してから、もう一度開いてください。すでにアプリケーションフォルダにある場合は、Finderでいったんデスクトップへ移動してから戻してください。さらに、ほかのアプリと一緒ではなく、1つずつ移動することにも注意してください。"
+          }
+        }
+      }
+    },
+    "Registered Apps" : {
+      "comment" : "Settings > Registration: stop scrolling only in registered apps",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登録アプリ"
+          }
+        }
+      }
+    },
+    "Registration" : {
+      "comment" : "Settings tab title: registered apps",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登録"
+          }
+        }
+      }
+    },
+    "Scrolling stops in the highlighted directions." : {
+      "comment" : "Settings > Registration: note under the registered app list about the vertical/horizontal buttons",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "色の付いた方向のスクロールを停止します。"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "comment" : "Settings window title",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        }
+      }
+    },
+    "Settings..." : {
+      "comment" : "Settings menu item",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定..."
+          }
+        }
+      }
+    },
+    "Stop Horizontal Scrolling" : {
+      "comment" : "Settings > Registration: tooltip of the horizontal button on a registered app row",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "水平方向のスクロールを停止する"
+          }
+        }
+      }
+    },
+    "Stop Scrolling In" : {
+      "comment" : "Settings > Registration: picker title for where scrolling is stopped",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止対象"
+          }
+        }
+      }
+    },
+    "Stop Vertical Scrolling" : {
+      "comment" : "Settings > Registration: tooltip of the vertical button on a registered app row",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "垂直方向のスクロールを停止する"
+          }
+        }
+      }
+    },
+    "Used when stopping in all apps. Newly registered apps also start with this setting." : {
+      "comment" : "Settings > General: note under Directions to Stop",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのアプリで停止するときに使います。新しく登録したアプリの初期値にもなります。"
+          }
+        }
+      }
+    },
+    "Vertical Only" : {
+      "comment" : "Settings: stop vertical scrolling only",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "垂直方向のみ"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

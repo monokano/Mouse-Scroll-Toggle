@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="AppleTitle" content="許可とトラブルシューティング">
+<title>許可とトラブルシューティング</title>
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<p class="breadcrumb"><a href="index.html">Mouse Scroll Toggleヘルプ</a> › 許可とトラブルシューティング</p>
+<h1>許可とトラブルシューティング</h1>
+
+<h2 id="accessibility">Macの制御を許可する</h2>
+<p>Mouse Scroll Toggleがスクロールを停止するには、Macを制御する許可が必要です。スクロールの操作を受け取って停止するために使います。許可がないと、スクロールを停止できません。</p>
+<p>許可がないときは、次のように知らせます。</p>
+<ul>
+  <li>メニューバーのアイコンが警告の三角形になります。クリックすると、許可を求めるダイアログが表示されます。</li>
+  <li>Dockのアイコンのメニューに「⚠️ Macを制御する許可が必要」が表示されます。選ぶと、許可を求めるダイアログが表示されます。</li>
+</ul>
+<p>ダイアログの「システム設定を開く」をクリックすると、許可を設定する場所が開きます。自分で開くときは、macOSのバージョンに合わせて次の場所を開きます。</p>
+<dl>
+  <dt>macOS 26以前</dt>
+  <dd>「プライバシーとセキュリティ」›「アクセシビリティ」</dd>
+  <dt>macOS 27以降</dt>
+  <dd>「プライバシーとセキュリティ」›「デバイスの制御とデータへのアクセス」</dd>
+</dl>
+<ol class="steps">
+  <li>上の場所を「システム設定」で開きます。</li>
+  <li>一覧のMouse Scroll Toggleをオンにします。一覧にない場合は、<kbd>+</kbd> ボタンでアプリケーションフォルダのMouse Scroll Toggleを追加します。</li>
+</ol>
+<div class="note">
+  <strong>メモ</strong>
+  システム設定のサイドバーにある「アクセシビリティ」は、見え方や操作を補助する設定です。この許可はそこではなく、「プライバシーとセキュリティ」の中で設定します。
+</div>
+
+<h2 id="trouble">うまく動かないとき</h2>
+<dl>
+  <dt>スクロールが停止しない</dt>
+  <dd><a href="#accessibility">Macを制御する許可</a>があるか確認してください。また、<a href="02_registration.html#stop-target">停止対象</a>が「登録アプリ」のときは、そのアプリが「登録アプリ」の一覧にあるか確認してください。</dd>
+
+  <dt>片方の方向しか停止しない、または停止したくない方向まで停止する</dt>
+  <dd>登録したアプリは、「登録」タブの各行の右端のボタンで、停止する方向を確認してください（<a href="02_registration.html#direction">アプリごとに停止する方向を選ぶ</a>）。停止対象が「すべて」のときは、「一般」タブの<a href="03_settings.html#direction">停止する方向</a>を確認してください。</dd>
+
+  <dt>メニューバーのアイコンが見当たらない</dt>
+  <dd>表示モードが「Dockのみ」になっているか、ノッチでアイコンが隠れている可能性があります。<kbd>⌘</kbd> キーを押しながらMouse Scroll Toggleを起動すると、表示モードをデフォルト（メニューバーとDockの両方）に戻せます。</dd>
+</dl>
+</body>
+</html>

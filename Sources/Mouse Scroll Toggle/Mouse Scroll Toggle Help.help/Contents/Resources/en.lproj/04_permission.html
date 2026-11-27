@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="AppleTitle" content="Permissions and Troubleshooting">
+<title>Permissions and Troubleshooting</title>
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<p class="breadcrumb"><a href="index.html">Mouse Scroll Toggle Help</a> › Permissions and Troubleshooting</p>
+<h1>Permissions and Troubleshooting</h1>
+
+<h2 id="accessibility">Allow Mouse Scroll Toggle to control your Mac</h2>
+<p>To stop scrolling, Mouse Scroll Toggle needs permission to control your Mac. It uses this permission to receive scroll input and stop it. Without it, scrolling can’t be stopped.</p>
+<p>When permission is missing, the app lets you know:</p>
+<ul>
+  <li>The menu bar icon changes to a warning triangle. Click it to see a dialog asking for permission.</li>
+  <li>The Dock icon’s menu shows “⚠️ Permission to control your Mac required.” Choose it to see a dialog asking for permission.</li>
+</ul>
+<p>Click Open System Settings in the dialog to go straight to the place where you set the permission. To open it yourself, go to the place for your version of macOS:</p>
+<dl>
+  <dt>macOS 26 or earlier</dt>
+  <dd>Privacy &amp; Security › Accessibility</dd>
+  <dt>macOS 27 or later</dt>
+  <dd>Privacy &amp; Security › Device Control and Data Access</dd>
+</dl>
+<ol class="steps">
+  <li>Open the place above in System Settings.</li>
+  <li>Turn on Mouse Scroll Toggle in the list. If it isn’t listed, click the <kbd>+</kbd> button and add Mouse Scroll Toggle from the Applications folder.</li>
+</ol>
+<div class="note">
+  <strong>Note</strong>
+  Accessibility in the System Settings sidebar is for settings that help with seeing, hearing, and using your Mac. You set this permission in Privacy &amp; Security, not there.
+</div>
+
+<h2 id="trouble">If something doesn’t work</h2>
+<dl>
+  <dt>Scrolling isn’t stopped</dt>
+  <dd>Make sure Mouse Scroll Toggle has <a href="#accessibility">permission to control your Mac</a>. If <a href="02_registration.html#stop-target">Stop Scrolling In</a> is set to Registered Apps, also make sure the app is in the Registered Apps list.</dd>
+
+  <dt>Only one direction is stopped, or a direction you want to keep is stopped</dt>
+  <dd>For registered apps, check the buttons at the right end of each row in the Registration tab (see <a href="02_registration.html#direction">Choosing the directions to stop for each app</a>). If Stop Scrolling In is set to All Apps, check <a href="03_settings.html#direction">Directions to Stop</a> in the General tab.</dd>
+
+  <dt>The menu bar icon is missing</dt>
+  <dd>Display Mode may be set to Dock Only, or the icon may be hidden behind the notch. Hold down <kbd>Command</kbd> while opening Mouse Scroll Toggle to reset Display Mode to the default (Menu Bar and Dock).</dd>
+</dl>
+</body>
+</html>
