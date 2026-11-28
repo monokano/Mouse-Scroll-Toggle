@@ -6,7 +6,7 @@ macOS用デスクトップアプリ
 
 ## ダウンロード
 
-[Mouse-Scroll-Toggle-130.zip](https://github.com/monokano/Mouse-Scroll-Toggle/releases/download/1.3.0/Mouse-Scroll-Toggle-130.zip)
+[Mouse-Scroll-Toggle-140.zip](https://github.com/monokano/Mouse-Scroll-Toggle/releases/download/1.4.0/Mouse-Scroll-Toggle-140.zip)
 <br>[更新内容](https://github.com/monokano/Mouse-Scroll-Toggle/releases)
 
 ## 用途
