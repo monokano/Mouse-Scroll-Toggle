@@ -61,7 +61,83 @@ enum ScrollStopTargetStore {
     }
 }
 
+/// 押している間はスクロールの停止を解除する修飾キー（の組み合わせ）
+enum OverrideModifier: String, CaseIterable, Identifiable {
+    case command
+    case option
+    case shift
+    case control
+    case optionCommand
+    case shiftCommand
+    case optionShiftCommand
+
+    var id: String { rawValue }
+
+    /// 単独のキー（ポップアップで区切り線の上に並べる）
+    static let singles: [OverrideModifier] = [.command, .option, .shift, .control]
+    /// 組み合わせ（区切り線の下に並べる）
+    static let combinations: [OverrideModifier] = [.optionCommand, .shiftCommand, .optionShiftCommand]
+
+    /// ポップアップの表示名。単独のキーは記号＋キー名、組み合わせは記号だけ（幅を抑えるため）。
+    /// キー名は日本語の macOS でも英字表記なのでローカライズしない
+    var label: String {
+        switch self {
+        case .option:             return "⌥ option"
+        case .control:            return "⌃ control"
+        case .shift:              return "⇧ shift"
+        case .command:            return "⌘ command"
+        case .optionCommand:      return "⌥⌘"
+        case .shiftCommand:       return "⇧⌘"
+        case .optionShiftCommand: return "⌥⇧⌘"
+        }
+    }
+
+    /// 対応する修飾キーのフラグ
+    var flags: CGEventFlags {
+        switch self {
+        case .option:             return .maskAlternate
+        case .control:            return .maskControl
+        case .shift:              return .maskShift
+        case .command:            return .maskCommand
+        case .optionCommand:      return [.maskAlternate, .maskCommand]
+        case .shiftCommand:       return [.maskShift, .maskCommand]
+        case .optionShiftCommand: return [.maskAlternate, .maskShift, .maskCommand]
+        }
+    }
+
+    /// 判定に使う修飾キー（⌥⌃⇧⌘）。caps lock・fn などは見ない
+    static let relevantFlags: CGEventFlags = [.maskAlternate, .maskControl, .maskShift, .maskCommand]
+
+    /// 押されている修飾キーが、この組み合わせとちょうど一致するか（余分なキーが押されていれば一致しない）
+    func matches(_ eventFlags: CGEventFlags) -> Bool {
+        eventFlags.intersection(Self.relevantFlags) == flags
+    }
+}
+
+/// 修飾キーによる一時解除の設定（「一般」タブ）。既定はオン・⌘ command
+enum ModifierOverrideStore {
+    static let enabledKey = "ScrollToggle.modifierOverrideEnabled"
+    static let modifierKey = "ScrollToggle.overrideModifier"
+    static let defaultEnabled = true
+    static let defaultModifier: OverrideModifier = .command
+
+    /// 未保存なら `defaultEnabled`（`UserDefaults.bool` は未保存で false を返すので使わない）
+    static func loadEnabled() -> Bool {
+        UserDefaults.standard.object(forKey: enabledKey) as? Bool ?? defaultEnabled
+    }
+
+    static func loadModifier() -> OverrideModifier {
+        guard let raw = UserDefaults.standard.string(forKey: modifierKey),
+              let modifier = OverrideModifier(rawValue: raw) else {
+            return defaultModifier
+        }
+        return modifier
+    }
+}
+
 extension Notification.Name {
+    /// 修飾キーによる一時解除の設定が変わったときに投げる
+    static let modifierOverrideChanged = Notification.Name("ScrollToggle.modifierOverrideChanged")
     static let scrollBlockAxisChanged = Notification.Name("ScrollToggle.scrollBlockAxisChanged")
     /// 停止状態（登録アプリ・停止対象・最前面アプリ）が変わったときに投げる。アイコン表示の更新用
     static let scrollStateChanged = Notification.Name("ScrollToggle.scrollStateChanged")
@@ -111,10 +187,25 @@ final class ScrollSettingsManager: ObservableObject {
         return blockAxis
     }
 
+    /// 修飾キーによる一時解除（イベントタップのコールバックから参照する）。nil なら機能オフ
+    private(set) var overrideModifier: OverrideModifier? = ScrollSettingsManager.loadOverrideModifier()
+
+    private static func loadOverrideModifier() -> OverrideModifier? {
+        ModifierOverrideStore.loadEnabled() ? ModifierOverrideStore.loadModifier() : nil
+    }
+
     private var appSwitchObserver: Any?
     private var blockAxisObserver: Any?
+    private var modifierOverrideObserver: Any?
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
+
+    /// いまのジェスチャ（トラックパッド・Magic Mouse）を一時解除の修飾キーを押して始めたか。
+    /// 慣性のイベントをどう扱うかに使う。始まりを見ていないうち（起動直後など）は従来どおりの動きにするため true
+    private var gestureStartedWithOverride = true
+    /// `scrollWheelEventScrollPhase` の値（CGScrollPhase）。began＝1、mayBegin＝128
+    private static let scrollPhaseBegan: Int64 = 1
+    private static let scrollPhaseMayBegin: Int64 = 128
 
     init() {
         loadRegisteredApps()
@@ -126,6 +217,13 @@ final class ScrollSettingsManager: ObservableObject {
         ) { [weak self] _ in
             self?.blockAxis = ScrollBlockAxisStore.load()
         }
+        modifierOverrideObserver = NotificationCenter.default.addObserver(
+            forName: .modifierOverrideChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.overrideModifier = ScrollSettingsManager.loadOverrideModifier()
+        }
         checkFrontmostApp()
         syncEventTap()
     }
@@ -135,6 +233,9 @@ final class ScrollSettingsManager: ObservableObject {
             NSWorkspace.shared.notificationCenter.removeObserver(obs)
         }
         if let obs = blockAxisObserver {
+            NotificationCenter.default.removeObserver(obs)
+        }
+        if let obs = modifierOverrideObserver {
             NotificationCenter.default.removeObserver(obs)
         }
         removeEventTap()
@@ -283,6 +384,25 @@ final class ScrollSettingsManager: ObservableObject {
             return Unmanaged.passUnretained(event)
         }
         guard type == .scrollWheel else { return Unmanaged.passUnretained(event) }
+
+        let overrideHeld = overrideModifier?.matches(event.flags) ?? false
+
+        // トラックパッド・Magic Mouse のジェスチャの始まりで、一時解除の修飾キーを押していたかを覚える。
+        // 修飾キーなしで始めたジェスチャの慣性は、あとから修飾キーを押しても止めたままにする
+        // （押した時点で残りの慣性が通り、画面が流れてしまうため。2026-11-28 ユーザー指摘）。
+        // 修飾キーを押して始めたジェスチャの慣性は従来どおり、押している間だけ通す（離すとすぐ止まる。ユーザー指定）
+        let scrollPhase = event.getIntegerValueField(.scrollWheelEventScrollPhase)
+        if scrollPhase == Self.scrollPhaseBegan || scrollPhase == Self.scrollPhaseMayBegin {
+            gestureStartedWithOverride = overrideHeld
+        }
+        let isMomentum = event.getIntegerValueField(.scrollWheelEventMomentumPhase) != 0
+
+        // 一時解除の修飾キーをちょうどその組み合わせで押している間は、止めずに通す。
+        // そのとき修飾キーの情報は外す（残すとアプリが「⌥＋スクロール＝拡大縮小」などとして扱うため。InDesign で実例）
+        if overrideHeld, !(isMomentum && !gestureStartedWithOverride), let modifier = overrideModifier {
+            event.flags = event.flags.subtracting(modifier.flags)
+            return Unmanaged.passUnretained(event)
+        }
 
         switch activeBlockAxis {
         case .both:

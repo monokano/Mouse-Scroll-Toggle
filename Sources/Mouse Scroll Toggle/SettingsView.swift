@@ -16,12 +16,17 @@ final class SettingsTabViewController: NSTabViewController {
         addTab(
             GeneralSettingsView(),
             label: String(localized: "General"),
-            symbol: "gearshape"
+            image: NSImage(systemSymbolName: "gearshape", accessibilityDescription: nil)
+        )
+        addTab(
+            ScrollingSettingsView(),
+            label: String(localized: "Scrolling"),
+            image: Self.scrollTabIcon()
         )
         addTab(
             RegistrationSettingsView(manager: manager),
             label: String(localized: "Registration"),
-            symbol: "app.badge.checkmark"
+            image: NSImage(systemSymbolName: "plus.app", accessibilityDescription: nil)
         )
     }
 
@@ -29,7 +34,29 @@ final class SettingsTabViewController: NSTabViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func addTab<V: View>(_ view: V, label: String, symbol: String) {
+    /// 「スクロール」タブのアイコン（マウスの中に下矢印。SF Symbols に無いので自作 SVG をアセットに登録してある）
+    /// - アセットはテンプレート画像なので、ダークモードや選択中の色は自動で付く
+    /// - ツールバーは SF Symbols 以外の画像を 32pt 枠いっぱいに拡大して描く（オフスクリーン描画で実測）。
+    ///   そのため 32pt 角の透明キャンバスの中央に、高さ 22pt（隣の computermouse より 2pt 大きめ）で描いた画像を渡す
+    private static func scrollTabIcon() -> NSImage? {
+        guard let source = NSImage(named: "icon-scroll") else {
+            return NSImage(systemSymbolName: "computermouse", accessibilityDescription: nil)
+        }
+        let canvas: CGFloat = 32
+        let height: CGFloat = 22
+        let width = height * source.size.width / source.size.height
+        let image = NSImage(size: NSSize(width: canvas, height: canvas), flipped: false) { rect in
+            source.draw(in: NSRect(x: (rect.width - width) / 2,
+                                   y: (rect.height - height) / 2,
+                                   width: width,
+                                   height: height))
+            return true
+        }
+        image.isTemplate = true
+        return image
+    }
+
+    private func addTab<V: View>(_ view: V, label: String, image: NSImage?) {
         let hosting = NSHostingController(
             rootView: view
                 .frame(width: Self.contentWidth)
@@ -39,7 +66,8 @@ final class SettingsTabViewController: NSTabViewController {
         hosting.title = label
         let item = NSTabViewItem(viewController: hosting)
         item.label = label
-        item.image = NSImage(systemSymbolName: symbol, accessibilityDescription: label)
+        image?.accessibilityDescription = label
+        item.image = image
         addTabViewItem(item)
     }
 }
@@ -48,7 +76,6 @@ final class SettingsTabViewController: NSTabViewController {
 
 private struct GeneralSettingsView: View {
     @AppStorage(DisplayModeStore.key) private var rawMode: String = DisplayModeStore.defaultValue.rawValue
-    @AppStorage(ScrollBlockAxisStore.key) private var rawBlockAxis: String = ScrollBlockAxisStore.defaultValue.rawValue
     @State private var launchAtLogin: Bool = SMAppService.mainApp.status == .enabled
     @State private var hasNotch = NotchDetector.hasNotchedDisplay
 
@@ -63,16 +90,6 @@ private struct GeneralSettingsView: View {
             set: { newValue in
                 rawMode = newValue.rawValue
                 NotificationCenter.default.post(name: .displayModeChanged, object: nil)
-            }
-        )
-    }
-
-    private var blockAxis: Binding<ScrollBlockAxis> {
-        Binding(
-            get: { ScrollBlockAxis(rawValue: rawBlockAxis) ?? ScrollBlockAxisStore.defaultValue },
-            set: { newValue in
-                rawBlockAxis = newValue.rawValue
-                NotificationCenter.default.post(name: .scrollBlockAxisChanged, object: nil)
             }
         )
     }
@@ -97,22 +114,6 @@ private struct GeneralSettingsView: View {
 
     var body: some View {
         Form {
-            Section {
-                RadioGroup(selection: blockAxis, options: [
-                    (.verticalOnly, "Vertical Only"),
-                    (.horizontalOnly, "Horizontal Only"),
-                    (.both, "Both"),
-                ])
-            } header: {
-                Text("Directions to Stop")
-            } footer: {
-                // 登録アプリはアプリごとに「登録」タブで設定する。ここはそれ以外の場面と初期値
-                Text("Used when stopping in all apps. Newly registered apps also start with this setting.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
             Section {
                 // ノッチ環境では「メニューバーのみ」を無効化（アイコンがノッチの陰に隠れるため）
                 RadioGroup(
@@ -152,6 +153,88 @@ private struct GeneralSettingsView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) { _ in
             hasNotch = NotchDetector.hasNotchedDisplay
         }
+    }
+}
+
+// MARK: - スクロール
+
+/// 「スクロール」タブ：停止する方向（既定値）と、修飾キーによる一時解除
+private struct ScrollingSettingsView: View {
+    @AppStorage(ScrollBlockAxisStore.key) private var rawBlockAxis: String = ScrollBlockAxisStore.defaultValue.rawValue
+    @AppStorage(ModifierOverrideStore.enabledKey) private var overrideEnabled: Bool = ModifierOverrideStore.defaultEnabled
+    @AppStorage(ModifierOverrideStore.modifierKey) private var rawOverrideModifier: String = ModifierOverrideStore.defaultModifier.rawValue
+
+    private var blockAxis: Binding<ScrollBlockAxis> {
+        Binding(
+            get: { ScrollBlockAxis(rawValue: rawBlockAxis) ?? ScrollBlockAxisStore.defaultValue },
+            set: { newValue in
+                rawBlockAxis = newValue.rawValue
+                NotificationCenter.default.post(name: .scrollBlockAxisChanged, object: nil)
+            }
+        )
+    }
+
+    private var overrideEnabledBinding: Binding<Bool> {
+        Binding(
+            get: { overrideEnabled },
+            set: { newValue in
+                overrideEnabled = newValue
+                NotificationCenter.default.post(name: .modifierOverrideChanged, object: nil)
+            }
+        )
+    }
+
+    private var overrideModifier: Binding<OverrideModifier> {
+        Binding(
+            get: { OverrideModifier(rawValue: rawOverrideModifier) ?? ModifierOverrideStore.defaultModifier },
+            set: { newValue in
+                rawOverrideModifier = newValue.rawValue
+                NotificationCenter.default.post(name: .modifierOverrideChanged, object: nil)
+            }
+        )
+    }
+
+    var body: some View {
+        Form {
+            Section {
+                RadioGroup(selection: blockAxis, options: [
+                    (.verticalOnly, "Vertical Only"),
+                    (.horizontalOnly, "Horizontal Only"),
+                    (.both, "Both"),
+                ])
+            } header: {
+                Text("Directions to Stop")
+            } footer: {
+                // 登録アプリはアプリごとに「登録」タブで設定する。ここはそれ以外の場面と初期値
+                Text("Used when stopping in all apps. Newly registered apps also start with this setting.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            // 修飾キーを押している間だけ停止を解除する（既定はオフ）
+            Section {
+                Toggle("Scroll While Holding Modifier Keys", isOn: overrideEnabledBinding)
+                    .toggleStyle(.switch)
+                Picker("Modifier Keys", selection: overrideModifier) {
+                    ForEach(OverrideModifier.singles) { Text(verbatim: $0.label).tag($0) }
+                    Divider()
+                    ForEach(OverrideModifier.combinations) { Text(verbatim: $0.label).tag($0) }
+                }
+                .pickerStyle(.menu)
+                .disabled(!overrideEnabled)
+            } header: {
+                Text("Temporary Override")
+            } footer: {
+                Text("While the selected keys are held, you can scroll even when scrolling is stopped.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .formStyle(.grouped)
+        .scrollDisabled(true)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

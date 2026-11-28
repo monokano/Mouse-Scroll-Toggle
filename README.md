@@ -7,6 +7,7 @@ macOS用デスクトップアプリ
 ## ダウンロード
 
 [Mouse-Scroll-Toggle-130.zip](https://github.com/monokano/Mouse-Scroll-Toggle/releases/download/1.3.0/Mouse-Scroll-Toggle-130.zip)
+<br>[更新内容](https://github.com/monokano/Mouse-Scroll-Toggle/releases)
 
 ## 用途
 
@@ -16,6 +17,7 @@ Mouse Scroll Toggleは、マウスのスクロールを停止するユーティ�
 
 - **停止対象**：すべてのアプリで停止するか、登録したアプリだけ停止するかを選べます。
 - **停止するスクロール方向**：垂直方向のみ、水平方向のみ、両方とも停止を選べます。登録したアプリごとに設定できます。
+- **一時解除**：選んだ修飾キーを押している間だけ、停止中でもスクロールできます（デフォルトは⌘キー）。
 
 ![設定](img/setting.png)
 

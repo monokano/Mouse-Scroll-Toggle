@@ -57,7 +57,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // 変わり得る。実効表示モードを再適用する（ノッチ出現時に「メニューバーのみ」→「両方」）。
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(displayModeChanged),
+            selector: #selector(screenParametersChanged),
             name: NSApplication.didChangeScreenParametersNotification,
             object: nil
         )
@@ -115,8 +115,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return alert.runModal() == .alertSecondButtonReturn
     }
 
+    /// 設定画面で表示モードが変わったとき。「メニューバーのみ」への切替は activationPolicy が
+    /// .accessory になりアプリごと非アクティブ化されて設定ウィンドウが背面に落ちる。ポリシー変更は
+    /// 非同期に反映されるため、少し遅らせて設定ウィンドウを前面へ戻す（SPAi・FILL Id と同じ対処）。
     @objc private func displayModeChanged() {
         applyDisplayMode()
+        if let window = settingsWindow, window.isVisible {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                guard window.isVisible else { return }
+                self?.bringToFront(window)
+            }
+        }
+    }
+
+    /// ディスプレイ構成が変わったとき（ノッチの出現/消失を含む）に実効表示モードを再適用する。
+    /// 設定ウィンドウを前面へ出す処理は行わない。
+    @objc private func screenParametersChanged() {
+        applyDisplayMode()
+    }
+
+    private func bringToFront(_ window: NSWindow) {
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
     }
 
     @objc private func scrollStateChanged() {
@@ -152,11 +173,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - 設定ウィンドウ（自前実装）
 
+    /// 開くたびに `bringToFront(_:)` で最前面に出す（SPAi・FILL Id と同じ）。
+    /// `activate` だけでは他アプリが前面のとき効かないことがあり、背面に開いてしまうため `orderFrontRegardless` まで行う
     private func openSettingsWindow() {
-        NSApp.activate(ignoringOtherApps: true)
-
         if let window = settingsWindow {
-            window.makeKeyAndOrderFront(nil)
+            bringToFront(window)
             return
         }
 
@@ -169,7 +190,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.center()
         window.setFrameAutosaveName("ScrollToggleSettingsWindow")
         settingsWindow = window
-        window.makeKeyAndOrderFront(nil)
+        bringToFront(window)
     }
 
     // MARK: - メニュー構築（メニューバー & Dock 共通）
@@ -290,15 +311,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// SF Symbol をカラーで生成する（isTemplate = false）
     /// 大きさは FILL Id・SPAi のメニューバーアイコン（アプリアイコンを 19×19pt に縮小、見える部分は約 15.5pt）にそろえる。
-    /// 18pt の記号は余白込みで 21×21pt（スイッチの見える部分は約 16×17pt）なので、縦横比を保って 19×19pt に
-    /// 収めると見える部分が約 15.4pt になる。以前は 18×18pt に押し込んでいて約 14.5pt と小さかった（2026-11-26）。
+    /// 18pt の記号は余白込みで 21×21pt なので、縦横比を保って 19.5×19.5pt に収める。Retina での見える四角は
+    /// 29×31px（実測）。19pt（28×30px）ではスクリーンショットで比べて 1px 小さかったので 0.5pt 足した（2026-11-28 ユーザー指定）。
+    /// 以前は 18×18pt に押し込んでいて小さかった（2026-11-26）。
     private func coloredSymbol(_ name: String, color: NSColor) -> NSImage? {
         let config = NSImage.SymbolConfiguration(pointSize: 18, weight: .regular)
             .applying(NSImage.SymbolConfiguration(paletteColors: [color]))
         guard let src = NSImage(systemSymbolName: name, accessibilityDescription: nil)?
             .withSymbolConfiguration(config) else { return nil }
 
-        let size = NSSize(width: 19, height: 19)
+        let size = NSSize(width: 19.5, height: 19.5)
         let result = NSImage(size: size, flipped: false) { rect in
             // 縦横比を保って中央に収める（記号によっては横長のため）
             let s = min(rect.width / src.size.width, rect.height / src.size.height)

@@ -10,10 +10,27 @@
 <p class="breadcrumb"><a href="index.html">Mouse Scroll Toggle Help</a> › Settings</p>
 <h1>Settings</h1>
 
-<p>To open the Settings window, choose Settings... from the menu of the menu bar icon or the Dock icon. Click General or Registration in the toolbar to switch tabs.</p>
-<p>This page describes the General tab. For the Registration tab, see <a href="02_registration.html">Registering Apps to Stop Scrolling In</a>.</p>
+<p>To open the Settings window, choose Settings... from the menu of the menu bar icon or the Dock icon. Click General, Scrolling, or Registration in the toolbar to switch tabs.</p>
+<p>This page describes the General and Scrolling tabs. For the Registration tab, see <a href="02_registration.html">Registering Apps to Stop Scrolling In</a>.</p>
 
-<h2 id="direction">Directions to Stop</h2>
+<h2 id="general">General Tab</h2>
+<p>Set where Mouse Scroll Toggle appears and how it opens.</p>
+
+<h3 id="display-mode">Display Mode</h3>
+<p>Choose where Mouse Scroll Toggle appears: Menu Bar Only, Dock Only, or Menu Bar and Dock. The default is Menu Bar and Dock.</p>
+<p>On a Mac whose built-in display has a notch, Menu Bar Only isn’t available, because the menu bar icon could become hidden behind the notch and you wouldn’t be able to use it.</p>
+<div class="note">
+  <strong>Tip</strong>
+  If you can’t find the menu bar icon, hold down <kbd>Command</kbd> while opening Mouse Scroll Toggle to reset Display Mode to the default (Menu Bar and Dock).
+</div>
+
+<h3 id="login">Launch at Login</h3>
+<p>When this is on, Mouse Scroll Toggle opens automatically when you log in to your Mac.</p>
+
+<h2 id="scrolling">Scrolling Tab</h2>
+<p>Set which directions to stop and how to temporarily override the stop.</p>
+
+<h3 id="direction">Directions to Stop</h3>
 <p>Choose which directions to stop when scrolling is stopped.</p>
 <dl>
   <dt>Vertical Only</dt>
@@ -26,18 +43,24 @@
 <p>This setting is used when All Apps is selected in <a href="02_registration.html#stop-target">Stop Scrolling In</a>. Newly registered apps also start with this setting.</p>
 <div class="note">
   <strong>Note</strong>
-  For registered apps, you set the directions to stop for each app in the Registration tab (see <a href="02_registration.html#direction">Choosing the directions to stop for each app</a>). Changing the directions to stop in the General tab doesn’t change apps that are already registered.
+  For registered apps, you set the directions to stop for each app in the Registration tab (see <a href="02_registration.html#direction">Choosing the directions to stop for each app</a>). Changing the directions to stop in the Scrolling tab doesn’t change apps that are already registered.
 </div>
 
-<h2 id="display-mode">Display Mode</h2>
-<p>Choose where Mouse Scroll Toggle appears: Menu Bar Only, Dock Only, or Menu Bar and Dock. The default is Menu Bar and Dock.</p>
-<p>On a Mac whose built-in display has a notch, Menu Bar Only isn’t available, because the menu bar icon could become hidden behind the notch and you wouldn’t be able to use it.</p>
+<h3 id="override">Temporary Override</h3>
+<p>Lets you scroll while holding the modifier keys you choose, even when scrolling is stopped.</p>
+<dl>
+  <dt>Scroll While Holding Modifier Keys</dt>
+  <dd>When this is on, you can use Temporary Override. It’s on by default.</dd>
+  <dt>Modifier Keys</dt>
+  <dd>Choose the keys to use for Temporary Override: <span style="white-space: nowrap"><kbd>command</kbd>,</span> <span style="white-space: nowrap"><kbd>option</kbd>,</span> <span style="white-space: nowrap"><kbd>shift</kbd>,</span> <span style="white-space: nowrap"><kbd>control</kbd>,</span> <span style="white-space: nowrap"><kbd>⌥⌘</kbd>,</span> <span style="white-space: nowrap"><kbd>⇧⌘</kbd>,</span> or <span style="white-space: nowrap"><kbd>⌥⇧⌘</kbd>.</span> The default is <span style="white-space: nowrap"><kbd>command</kbd>.</span></dd>
+</dl>
 <div class="note">
-  <strong>Tip</strong>
-  If you can’t find the menu bar icon, hold down <kbd>Command</kbd> while opening Mouse Scroll Toggle to reset Display Mode to the default (Menu Bar and Dock).
+  <strong>Note</strong>
+  You can scroll only while you’re holding exactly the keys you chose. For example, if you choose <kbd>⌥⌘</kbd> and hold only <span style="white-space: nowrap"><kbd>option</kbd>,</span> scrolling stays stopped.
 </div>
-
-<h2 id="login">Launch at Login</h2>
-<p>When this is on, Mouse Scroll Toggle opens automatically when you log in to your Mac.</p>
+<div class="note">
+  <strong>Note</strong>
+  When you scroll with Temporary Override, apps see an ordinary scroll, as if no modifier keys were held. Actions that apps assign to a modifier key plus scrolling (such as zooming) don’t happen.
+</div>
 </body>
 </html>

@@ -249,6 +249,17 @@
         }
       }
     },
+    "Modifier Keys" : {
+      "comment" : "Settings > General: pop-up menu label for choosing the modifier keys",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修飾キー"
+          }
+        }
+      }
+    },
     "Mouse Scroll OFF (%@)" : {
       "comment" : "State label auto off",
       "localizations" : {
@@ -414,6 +425,28 @@
         }
       }
     },
+    "Scroll While Holding Modifier Keys" : {
+      "comment" : "Settings > General: switch to allow scrolling while modifier keys are held",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修飾キーを押している間はスクロールする"
+          }
+        }
+      }
+    },
+    "Scrolling" : {
+      "comment" : "Settings window: toolbar tab for scrolling settings (directions to stop, temporary override)",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
+          }
+        }
+      }
+    },
     "Scrolling stops in the highlighted directions." : {
       "comment" : "Settings > Registration: note under the registered app list about the vertical/horizontal buttons",
       "localizations" : {
@@ -480,6 +513,17 @@
         }
       }
     },
+    "Temporary Override" : {
+      "comment" : "Settings > General: section header for releasing the scroll stop while modifier keys are held",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一時解除"
+          }
+        }
+      }
+    },
     "Used when stopping in all apps. Newly registered apps also start with this setting." : {
       "comment" : "Settings > General: note under Directions to Stop",
       "localizations" : {
@@ -498,6 +542,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "垂直方向のみ"
+          }
+        }
+      }
+    },
+    "While the selected keys are held, you can scroll even when scrolling is stopped." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選んだキーを押している間だけ、停止中でもスクロールできます。"
           }
         }
       }

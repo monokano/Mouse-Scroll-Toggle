@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="レイヤー 2" xmlns="http://www.w3.org/2000/svg" width="74" height="108" viewBox="0 0 74 108">
+  <defs>
+    <style>
+      .d, .e {
+        stroke-linecap: round;
+        stroke-width: 7px;
+      }
+
+      .d, .e, .f {
+        fill: none;
+        stroke: #1a1a1a;
+      }
+
+      .d, .f {
+        stroke-miterlimit: 10;
+      }
+
+      .e {
+        stroke-linejoin: round;
+      }
+
+      .f {
+        stroke-width: 8px;
+      }
+    </style>
+  </defs>
+  <g id="c" data-name="scroll">
+    <rect class="f" x="4" y="4" width="66" height="100" rx="33" ry="33"/>
+    <line class="d" x1="37" y1="19.47" x2="37" y2="48.47"/>
+    <polyline class="e" points="51.81 36.58 37 51.58 22.19 36.58"/>
+  </g>
+</svg>
